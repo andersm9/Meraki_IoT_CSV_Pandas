@@ -1,2 +1,9 @@
 # Meraki_IoT_CSV
-Export Meraki Sensor Data to CSV
+## Usage
+
+
+### loopback
+
+### sampleTime
+
+### Meraki Dashboard API key
