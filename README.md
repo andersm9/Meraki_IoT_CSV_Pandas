@@ -24,3 +24,12 @@ The 'sampleTime' value defines the ganularity with which data is output to CSV. 
 
 ### Meraki Dashboard API key
 The Meraki Dashboard API key is available as described [here](https://documentation.meraki.com/General_Administration/Other_Topics/Cisco_Meraki_Dashboard_API)
+
+## Output
+
+An example output CSV file is provided below. This provides a header row with each sensor & metric combination, and an individual timestamped row for each sampleTime:
+| Timestamp      | Q3CA_M7KP_VHF3_humidity |Q3CA_M7KP_VHF3_temperature| Q3CB_CB4N_AXM9_water|
+| ----------- | ----------- | ----------- | ----------- |
+| 1657538255.0   | 59       |22.0|FALSE|
+| 1657538755.0 |59       |22.1|FALSE|
+|1657539255.0 | 60|22.2|FALSE|
