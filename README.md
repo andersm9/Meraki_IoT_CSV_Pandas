@@ -25,6 +25,9 @@ The 'sampleTime' value defines the ganularity with which data is output to CSV. 
 ### Meraki Dashboard API key
 The Meraki Dashboard API key is available as described [here](https://documentation.meraki.com/General_Administration/Other_Topics/Cisco_Meraki_Dashboard_API)
 
+### ORG_ID
+The Meraki ORG_ID uniquely identifies an organization assoiated with an API key (AN API key may have multiple organizations). The ORG_ID can be obtained by making a "GET Organizations" call to the meraki Dashboard API, such as from the Meraki [Documentation](https://developer.cisco.com/meraki/api-v1/#!get-organizations)
+
 ## Output
 
 An example output CSV file is provided below, which is printed to 'results.scv' in the same directory as the script is run in. This provides a header row with each sensor & metric combination, and an individual timestamped row for each sampleTime:
