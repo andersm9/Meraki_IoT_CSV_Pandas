@@ -152,9 +152,9 @@ if __name__ == "__main__":
     #sample time in seconds
     SAMPLE_TIME = 500
     #API Key here:
-    API_KEY = "kjsdf834ufh4398nfk34nf8934gjnf3kjf438"
+    API_KEY = ""
     # e.g. API_KEY = "9jhdf83sbfu39275hdbsk49fn8nd10fbhs93bn"
-    ORG_ID = "265528"
+    ORG_ID = ""
     # e.g. ORG_ID = "123456"
 
     DASHBOARD = meraki.DashboardAPI(API_KEY)
