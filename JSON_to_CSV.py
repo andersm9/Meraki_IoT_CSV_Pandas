@@ -16,7 +16,7 @@ def get_data(lookback):
     headers = {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "X-Cisco-Meraki-API-Key": "84ff64ae344684bd483875c613c77b997cbe0489"
+        "X-Cisco-Meraki-API-Key": API_Key
     }
 
     response = dashboard.sensor.getOrganizationSensorReadingsHistory(265528,total_pages='all',timespan=lookback)
