@@ -97,69 +97,58 @@ def timeSteps(unixResponse, startTime, endTime, sampleTime):
 
 
 
+def iterate_data(unix_response, iterate_start_tme, iterateEndTime):
+    """
+    iterate through the sensor data in a given timeStep to define the latest datapoint for each column
+    """
 
+    loop_start = START_TIME
 
-def iterateData(unixResponse, iterateStartTime, iterateEndTime, n):
-    #iterate through the sensor data in a given timeStep to define the latest datapoint for each column
-    loopStart = startTime
-
-    for datapoint in unixResponse:
+    for datapoint in unix_response:
 
         #iterates over the entire dataset, able to select datapoints that are between the start and end times
-        if datapoint['ts'] > iterateStartTime and datapoint['ts']< iterateEndTime:
-            print("---------------------")
-            pprint(datapoint)
+        if datapoint['ts'] > iterate_start_tme and datapoint['ts'] < iterateEndTime:
             #iterate through the datapoints in a given timerange, looking for specific keys/value pairs
-            for reading in header_list:
+            for reading in HEADER_LIST:
                 #split out the serial and reading
-                #print(reading)
                 split_reading = reading.split("_")
-                print("split_reading")
-                print(split_reading)
 
                 # check if the datapoint serial number is the same as the current serial number
                 if split_reading[0] in datapoint['serial']:
-                    print(f"found serial {datapoint['serial']}")
-
-                    print('in split 0')
-                    if split_reading[3] in datapoint:
-                        # check if the datapoint reading is the same as the current reading
-                        print("in split 1")
-
-                        #ADD IN THE DATAPOINT INTO THE RELEVANT COLUMN (OVERWRITE IF NECESARY
-                        if 'temperature' in datapoint:
-                            last_result[header_list.index(reading)] = datapoint['temperature']['celsius']
-                            continue
-                        elif 'humidity' in datapoint:
-                            last_result[header_list.index(reading)] = datapoint['humidity']['relativePercentage']
-                            continue
-                        elif 'indoorAirQuality' in datapoint:
-                            last_result[header_list.index(reading)] = datapoint['indoorAirQuality']['score']
-                            continue
-                        elif 'tvoc' in datapoint:
-                            last_result[header_list.index(reading)] = datapoint['tvoc']['concentration']
-                            continue
-                        elif 'pm25' in datapoint:
-                            last_result[header_list.index(reading)] = datapoint['pm25']['concentration']
-                            continue
-                        elif 'door' in datapoint:
-                            last_result[header_list.index(reading)] = datapoint['door']['open']
-                            continue
-                        elif 'noise' in datapoint:
-                            last_result[header_list.index(reading)] = datapoint['noise']['ambient']['level']
-                            continue
-                        elif 'water' in datapoint:
-                            last_result[header_list.index(reading)] = datapoint['water']['present']
-                            continue
-
-        loopStart = loopStart + sampleTime
-    last_result[0] = iterateEndTime
-    print("last_result:")
-    print(f"{last_result}")
+                    if split_reading[1] in datapoint['serial']:
+                        if split_reading[2] in datapoint['serial']:
+                            # check if the datapoint reading is the same as the current reading
+                            if split_reading[3] in datapoint:
+                            #ADD IN THE DATAPOINT INTO THE RELEVANT COLUMN (OVERWRITE IF NECESARY
+                                if 'temperature' in datapoint:
+                                    LAST_RESULT[HEADER_LIST.index(reading)] = datapoint['temperature']['celsius']
+                                    continue
+                                if 'humidity' in datapoint:
+                                    LAST_RESULT[HEADER_LIST.index(reading)] = datapoint['humidity']['relativePercentage']
+                                    continue
+                                elif 'indoorAirQuality' in datapoint:
+                                    LAST_RESULT[HEADER_LIST.index(reading)] = datapoint['indoorAirQuality']['score']
+                                    continue
+                                elif 'tvoc' in datapoint:
+                                    LAST_RESULT[HEADER_LIST.index(reading)] = datapoint['tvoc']['concentration']
+                                    continue
+                                elif 'pm25' in datapoint:
+                                    LAST_RESULT[HEADER_LIST.index(reading)] = datapoint['pm25']['concentration']
+                                    continue
+                                elif 'door' in datapoint:
+                                    LAST_RESULT[HEADER_LIST.index(reading)] = datapoint['door']['open']
+                                    continue
+                                elif 'noise' in datapoint:
+                                    LAST_RESULT[HEADER_LIST.index(reading)] = datapoint['noise']['ambient']['level']
+                                    continue
+                                elif 'water' in datapoint:
+                                    LAST_RESULT[HEADER_LIST.index(reading)] = datapoint['water']['present']
+                                    continue
+        loop_start = loop_start + SAMPLE_TIME
+    LAST_RESULT[0] = iterateEndTime
     with open('results.csv', 'a') as f:
         write = csv.writer(f)
-        write.writerow(last_result)
-
+        write.writerow(LAST_RESULT)
 
 
 def initialLine():
