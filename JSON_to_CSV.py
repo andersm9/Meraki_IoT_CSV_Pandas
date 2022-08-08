@@ -1,33 +1,28 @@
-import requests
-import os
-import json
-from pprint import pprint
+"""
+Script to converst Meraki Sensor Data from JSON format to CSV
+"""
+
 import time
 import csv
-from datetime import datetime
 import math
 import meraki
 
 
-def get_data(lookback):
-    #retrieve the historic sensor data from Meraki
-    url = "https://api.meraki.com/api/v1/organizations/265528/sensor/readings/history" + "?timespan=604800"
-    payload = None
-    headers = {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "X-Cisco-Meraki-API-Key": API_Key
-    }
+def get_data():
+    """
+    aquire sensor data in JSON format from the Meraki Dashboard API
+    """
 
-    response = dashboard.sensor.getOrganizationSensorReadingsHistory(265528,total_pages='all',timespan=lookback)
-    print(type(response))
-    return(response)
+    dash_response = DASHBOARD.sensor.getOrganizationSensorReadingsHistory(ORG_ID, total_pages='all', timespan=LOOKBACK,suppress_logging=True)
+    return dash_response
 
+def get_headers():
+    """
+    define the column HEADERS from the sensor data
+    """
 
-def get_headers(response):
-    #define the column headers from the sensor data
     serials = set()
-    for datapoint in response:
+    for datapoint in RESPONSE:
         if 'serial' in datapoint:
             if 'temperature' in datapoint:
                 serials.add(datapoint['serial'].replace("-", "_") + "_temperature")
@@ -48,54 +43,54 @@ def get_headers(response):
             else:
                 continue
 
-    # alter the format of the serial number
-    print(serials)
-    return(serials)
+    return serials
 
 def convert_timestamps(response):
-    #convert zulu time to epoch/unix time
+    """
+    #convert zulu time to epoch/unix time 
+    """
+
     for datapoint in response:
-        Zulu_timestamp = datapoint['ts']
+        zulu_timestamp = datapoint['ts']
 
-        Epoch_timestamp = time.strptime(Zulu_timestamp, "%Y-%m-%dT%H:%M:%SZ")
+        epoch_timestamp = time.strptime(zulu_timestamp, "%Y-%m-%dT%H:%M:%SZ")
 
-        unix_time_local = time.mktime(Epoch_timestamp)
+        unix_time_local = time.mktime(epoch_timestamp)
 
         datapoint['ts'] = unix_time_local
-    return(response)
+    return response
 
-def timeSpan(unixResponse):
-    #define the start and end times (in epoch/unix time) of the sample data
-    startTime = 9999999999
-    endTime = 0
-    for datapoint in unixResponse:
-        if datapoint['ts'] < startTime:
-            startTime = datapoint['ts']
-        if datapoint['ts'] > endTime:
-            endTime = datapoint['ts']
-    return(startTime, endTime)
+def time_span(unix_response):
+    """
+    define the start and end times (in epoch/unix time) of the entire sample data
+    """
 
-def timeSteps(unixResponse, startTime, endTime, sampleTime):
-    # define each time step within the start and end times of the sensor data
-    iterateStartTime = startTime
-    iterateEndTime = iterateStartTime + sampleTime
-    ###timeSteps is the number of times we iterate over a time range, whole number
-    timeSteps = (endTime - startTime)/sampleTime
+    start_time = 9999999999
+    end_time = 0
+    for datapoint in unix_response:
+        if datapoint['ts'] < start_time:
+            start_time = datapoint['ts']
+        if datapoint['ts'] > end_time:
+            end_time = datapoint['ts']
+    return start_time, end_time
 
-    IntTimesteps = math.ceil(timeSteps)
-    steps = []
+def time_steps(start_time, sample_time, unix_response, end_time):
+    """
+    # define each time step within the start and end times of the sensor data 
+    """
+    ###time_steps is the number of times we iterate over a time range, whole number
+    no_time_steps = (end_time - start_time)/sample_time
+    int_time_steps = math.ceil(no_time_steps)
     n = 0
 
     #while loop iterates over the data, once for each of the steps
-    while n < IntTimesteps:
+    while n < int_time_steps:
 
-        stepStart = startTime + n*sampleTime
-        stepStop = stepStart + sampleTime
+        step_start = start_time + n*sample_time
+        step_stop = step_start + sample_time
         #MAKE CALL HERE TO GO THROUGH UNIXRESPONSE AND LOOK FOR THE RELEVANT TIMESTAMPS
         n = n+ 1
-        iterateData(unixResponse, stepStart, stepStop, n)
-
-
+        iterate_data(unix_response, step_start, step_stop)
 
 def iterate_data(unix_response, iterate_start_tme, iterateEndTime):
     """
@@ -150,56 +145,44 @@ def iterate_data(unix_response, iterate_start_tme, iterateEndTime):
         write = csv.writer(f)
         write.writerow(LAST_RESULT)
 
-
-def initialLine():
-    for entry in header_list:
-        last_result.append(0)
-    #print(last_result)
-
-
-
-
 if __name__ == "__main__":
-    #define the 'lookback' timespan in seconds
-    lookback = 6000
-    #sample time in seconds
-    sampleTime = 500
-    #API Key here (this is an example key only):
-    API_Key = "4gfh6tjs94bsmg1d486875c653c67b997cbekro4b"
 
-    dashboard = meraki.DashboardAPI(API_Key)
-    last_result = []
-    next_result = []
-    response = get_data(lookback)
+    #define the 'LOOKBACK' timespan in seconds
+    LOOKBACK = 600000
+    #sample time in seconds
+    SAMPLE_TIME = 500
+    #API Key here:
+    API_KEY = "kjsdf834ufh4398nfk34nf8934gjnf3kjf438"
+    # e.g. API_KEY = "9jhdf83sbfu39275hdbsk49fn8nd10fbhs93bn"
+    ORG_ID = "265528"
+    # e.g. ORG_ID = "123456"
+
+    DASHBOARD = meraki.DashboardAPI(API_KEY)
+    LAST_RESULT = []
+    NEXT_RESULT = []
+    RESPONSE = get_data()
 
     try:
-        headers = get_headers(response)
-        header_list = list(headers)
+        HEADERS = get_headers()
+        HEADER_LIST = list(HEADERS)
         #order the list alphanumerically for consistency when run multiple times
-        header_list = sorted(header_list, key=lambda item: (int(item.partition(' ')[0])
-                                           if item[0].isdigit() else float('inf'), item))
-        print(header_list)
-        header_list.insert(0,"Timestamp")
+        HEADER_LIST = sorted(HEADER_LIST, key=lambda item: (int(item.partition(' ')[0])
+        if item[0].isdigit() else float('inf'), item))
+        HEADER_LIST.insert(0, "Timestamp")
 
         #Write the header to the csv file
         with open('results.csv', 'w') as f:
             write = csv.writer(f)
-            write.writerow(header_list)
+            write.writerow(HEADER_LIST)
 
-
-    except Exception as e: 
+    except Exception as e:
         print(e)
         time.sleep(10)
-        pass
-    unixResponse = convert_timestamps(response)
 
-    # print the data to a local file - DON"T KNOW WHAT THIS IS FOR????
-    with open('output.json', 'w', encoding='utf-8') as f:
-        json.dump(unixResponse, f, ensure_ascii=False, indent=4)
-    startTime, endTime = timeSpan(unixResponse)
-    timeSpan = endTime - startTime
-
-    print(f"startTime = {startTime}")
-    print(f"endTime= {endTime}")
-    initialLine()
-    timeSteps(unixResponse, startTime, endTime, sampleTime)
+    UNIX_RESPONSE = convert_timestamps(RESPONSE)
+    START_TIME, END_TIME = time_span(UNIX_RESPONSE)
+    TIME_SPAN = END_TIME - START_TIME
+    for entry in HEADER_LIST:
+        #define an initial data row, populated with all zeros
+        LAST_RESULT.append(0)
+    time_steps(START_TIME, SAMPLE_TIME, UNIX_RESPONSE, END_TIME)
