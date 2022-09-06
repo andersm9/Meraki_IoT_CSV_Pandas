@@ -12,10 +12,10 @@ Processing and parsing data whereby relevant information is extracted from fresh
 Looking specifically at python, there exist a range of AI/ML tools, and Data Wrangling tools to assist. These include:
 
 
--Matplotlib: Matplotlib is a Python plotting library that provides various plotting functions for working with data. It is handy for creating visualizations of data.
--Seaborn: Seaborn is a Python data visualization library that provides various plotting functions for working with data. It is beneficial for creating beautiful visualizations of data.
--Scikit-learn: Scikit-learn is a machine learning library for Python that provides a wide range of algorithms for working with data. It is particularly useful for data wrangling tasks such as feature extraction and dimensionality reduction.
--Pandas. Python of course is an excellent language for data manipulation. Add on the Pandas library, which includes its DataFrame object, and data scientists can quickly perform even more complex operations. For example, merging, joining, and transforming huge hunks of data with a single Python statement.
+- Matplotlib: Matplotlib is a Python plotting library that provides various plotting functions for working with data. It is handy for creating visualizations of data.
+- Seaborn: Seaborn is a Python data visualization library that provides various plotting functions for working with data. It is beneficial for creating beautiful visualizations of data.
+- Scikit-learn: Scikit-learn is a machine learning library for Python that provides a wide range of algorithms for working with data. It is particularly useful for data wrangling tasks such as feature extraction and dimensionality reduction.
+- Pandas. Python of course is an excellent language for data manipulation. Add on the Pandas library, which includes its DataFrame object, and data scientists can quickly perform even more complex operations. For example, merging, joining, and transforming huge hunks of data with a single Python statement.
 
 The python script provided takes the output from the Meraki Dashboard API (provided in JSON format) and provides the sensor data in CSV and Pandas DataFrame format
 ![image](https://user-images.githubusercontent.com/20086981/188600249-058d3129-4a39-4b2d-913b-a94650fa472f.png)
