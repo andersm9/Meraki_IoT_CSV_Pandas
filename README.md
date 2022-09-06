@@ -4,10 +4,10 @@ The Cisco Meraki MT product family is a line of cloud managed sensor that is exc
 Using AI/ML to data typically involves a preparatory stage know as Data Wrangling in order to make the data more appropriate and valuable for a variety of downstream purposes such as analytics
 Some examples of Data Wrangling include;
 Processing and parsing data whereby relevant information is extracted from fresh data containing details such as numbers, ID codes etc
--Merging multiple data sources into a single dataset for analysis
--Identifying gaps in data (for example, empty cells in a spreadsheet) and either filling or deleting them
--Deleting data that’s either unnecessary or irrelevant to the project you’re working on
--Identifying extreme outliers in data and either explaining the discrepancies or removing them so that analysis can take place
+- Merging multiple data sources into a single dataset for analysis
+- Identifying gaps in data (for example, empty cells in a spreadsheet) and either filling or deleting them
+- Deleting data that’s either unnecessary or irrelevant to the project you’re working on
+- Identifying extreme outliers in data and either explaining the discrepancies or removing them so that analysis can take place
 
 Looking specifically at python, there exist a range of AI/ML tools, and Data Wrangling tools to assist. These include:
 
