@@ -37,23 +37,26 @@ The tool automatically detects the available MT sensors and their associated Met
 ## Paramaters
 The following parameters are required to be configured (examples are provided in the provided code.
 
-### loopback
-The 'loopback' value defines a timespan  which will be used to gather data over. For instance a value of 600000 will provide a value of approximately one week
+### LOOKBACK
+The 'LOOKBACK' value defines a timespan  which will be used to gather data over. For instance a value of 600000 will provide a value of approximately one week
 
-### sampleTime
+### SAMPLE_TIME
 The 'sampleTime' value defines the ganularity with which data is output to CSV. For instance a value of 500 means that a line of sensor reading will be provided for every 500 period. In the event that an individual sensor has not provided a reading in this timespan, the previous reading will be used. In the event that multiple readings have been provided in this timesapn, the most recent reading will be used.
 
 ### Meraki Dashboard API key
-The Meraki Dashboard API key is available as described [here](https://documentation.meraki.com/General_Administration/Other_Topics/Cisco_Meraki_Dashboard_API)
+The Meraki Dashboard API key (API_KEY) is available as described [here](https://documentation.meraki.com/General_Administration/Other_Topics/Cisco_Meraki_Dashboard_API)
 
 ### ORG_ID
 The Meraki ORG_ID uniquely identifies an organization assoiated with an API key (AN API key may have multiple organizations). The ORG_ID can be obtained by making a "GET Organizations" call to the meraki Dashboard API, such as from the Meraki [Documentation](https://developer.cisco.com/meraki/api-v1/#!get-organizations)
 
 ## Output
 
-An example output CSV file is provided below, which is printed to 'results.scv' in the same directory as the script is run in. This provides a header row with each sensor & metric combination, and an individual timestamped row for each sampleTime:
+An example output CSV file is provided below, which is printed to 'results.scv' in the same directory as the script is run in (the Pandas DataFrame follows a similar format). This provides a header row with each sensor & metric combination, and an individual timestamped row for each sampleTime:
 | Timestamp      | Q9EB_M7KP_VLA3_humidity |Q9EB_M7KP_VLA3_temperature| Q5MS_ISB7_PS83_water|
 | ----------- | ----------- | ----------- | ----------- |
 | 1657538255.0   | 59       |22.0|FALSE|
 | 1657538755.0 |59       |22.1|FALSE|
 |1657539255.0 | 60|22.2|FALSE|
+
+## Matplotlib
+As an example of usage of the Pandas DataFrame, the data gathered by the python script is plotted using the Matplotlib library
