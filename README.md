@@ -51,16 +51,16 @@ The Meraki ORG_ID uniquely identifies an organization assoiated with an API key 
 
 ## Output
 
-An example output CSV file is provided below, which is printed to 'results.scv' in the same directory as the script is run in (the Pandas DataFrame follows a similar format). This provides a header row with each sensor & metric combination, and an individual timestamped row for each sampleTime:
+An example output formtis provided below. The results are printed to 'results.csv' in the same directory as the script is run in, and the Pandas DataFrame follows a the same. This provides a header row with each sensor & metric combination, and an individual timestamped row for each sampleTime containing a complete set of measurements:
 
 | Timestamp      | Q9EB_M7KP_VLA3_humidity |Q9EB_M7KP_VLA3_temperature| Q5MS_ISB7_PS83_water|
 | ----------- | ----------- | ----------- | ----------- |
 | 1657538255.0   | 59       |22.0|FALSE|
 | 1657538755.0 |59       |22.1|FALSE|
 |1657539255.0 | 60|22.2|FALSE|
-
+### CSV output displayed in Excel:
 ![Output: CSV](images/xls.png)
 
-## Matplotlib
-As an example of usage of the Pandas DataFrame, the data gathered by the python script is plotted using the Matplotlib library
+### Pandas Dataframe output displaued using Matplotlib
+
 ![Output: Matplotlib](images/mat.png)
