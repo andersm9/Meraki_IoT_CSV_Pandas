@@ -52,7 +52,7 @@ The Meraki ORG_ID uniquely identifies an organization assoiated with an API key 
 ## Output
 
 An example output CSV file is provided below, which is printed to 'results.scv' in the same directory as the script is run in (the Pandas DataFrame follows a similar format). This provides a header row with each sensor & metric combination, and an individual timestamped row for each sampleTime:
-![My Title](Meraki_IoT_CSV/Images/Screen Shot 2022-09-06 at 3.54.30 PM.png)
+![My Title](Images/'Screen Shot 2022-09-06 at 3.54.30 PM.png')
 | Timestamp      | Q9EB_M7KP_VLA3_humidity |Q9EB_M7KP_VLA3_temperature| Q5MS_ISB7_PS83_water|
 | ----------- | ----------- | ----------- | ----------- |
 | 1657538255.0   | 59       |22.0|FALSE|
