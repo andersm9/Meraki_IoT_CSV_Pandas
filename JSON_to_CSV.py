@@ -1,5 +1,5 @@
 """
-Script to converst Meraki Sensor Data from JSON format to CSV
+Script to converst Meraki Sensor Data from JSON format to CSV and Pandas DF
 """
 
 import time
@@ -178,7 +178,7 @@ if __name__ == "__main__":
         HEADER_LIST = sorted(HEADER_LIST, key=lambda item: (int(item.partition(' ')[0])
         if item[0].isdigit() else float('inf'), item))
         HEADER_LIST.insert(0, "Timestamp")
-        #df = pd.DataFrame(HEADER_LIST)
+        #write header to Pandas DF
         df = pd.DataFrame(columns=HEADER_LIST)
         #Write the header to the csv file
         with open('results.csv', 'w') as f:
@@ -196,10 +196,7 @@ if __name__ == "__main__":
         #define an initial data row, populated with all zeros
         LAST_RESULT.append(0)
     time_steps(START_TIME, SAMPLE_TIME, UNIX_RESPONSE, END_TIME)
-    print("final result")
-    print(df)
-    #df.plot()
-    #plt.plot(df['Q3CA_6TWV_UXCS_humidity'], df['Q3CA_6TWV_UXCS_temperature'], color='g', label='')
+    #plot the results using the Pandas DF to matplotlib:
     for col in df.columns:
         if not col == 'Timestamp':
             plt.plot(df['Timestamp'], df[col], label='Line ' + col)
