@@ -6,11 +6,16 @@ import time
 import csv
 import math
 import meraki
+import pandas as pd
+import matplotlib.pyplot as plt
+
+
+
 
 
 def get_data():
     """
-    aquire sensor data in JSON format from the Meraki Dashboard API
+    acquire sensor data in JSON format from the Meraki Dashboard API
     """
 
     dash_response = DASHBOARD.sensor.getOrganizationSensorReadingsHistory(ORG_ID, total_pages='all', timespan=LOOKBACK,suppress_logging=True)
@@ -49,7 +54,6 @@ def convert_timestamps(response):
     """
     #convert zulu time to epoch/unix time 
     """
-
     for datapoint in response:
         zulu_timestamp = datapoint['ts']
 
@@ -144,11 +148,16 @@ def iterate_data(unix_response, iterate_start_tme, iterateEndTime):
     with open('results.csv', 'a') as f:
         write = csv.writer(f)
         write.writerow(LAST_RESULT)
+        ## write a row here using LAST_RESULT
+        global df
+        df.loc[len(df)] = LAST_RESULT
+
 
 if __name__ == "__main__":
 
+    x = 1
     #define the 'LOOKBACK' timespan in seconds
-    LOOKBACK = 600000
+    LOOKBACK = 300000
     #sample time in seconds
     SAMPLE_TIME = 500
     #API Key here:
@@ -169,7 +178,8 @@ if __name__ == "__main__":
         HEADER_LIST = sorted(HEADER_LIST, key=lambda item: (int(item.partition(' ')[0])
         if item[0].isdigit() else float('inf'), item))
         HEADER_LIST.insert(0, "Timestamp")
-
+        #df = pd.DataFrame(HEADER_LIST)
+        df = pd.DataFrame(columns=HEADER_LIST)
         #Write the header to the csv file
         with open('results.csv', 'w') as f:
             write = csv.writer(f)
@@ -186,3 +196,14 @@ if __name__ == "__main__":
         #define an initial data row, populated with all zeros
         LAST_RESULT.append(0)
     time_steps(START_TIME, SAMPLE_TIME, UNIX_RESPONSE, END_TIME)
+    print("final result")
+    print(df)
+    #df.plot()
+    #plt.plot(df['Q3CA_6TWV_UXCS_humidity'], df['Q3CA_6TWV_UXCS_temperature'], color='g', label='')
+    for col in df.columns:
+        if not col == 'Timestamp':
+            plt.plot(df['Timestamp'], df[col], label='Line ' + col)
+    plt.yscale('log')
+    plt.legend(fontsize=8)
+    #plt.legend()
+    plt.show()
