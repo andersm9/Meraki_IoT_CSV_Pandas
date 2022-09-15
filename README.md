@@ -21,7 +21,7 @@ The purpose of this project is to take the output from the Meraki Dashboard API 
 
 
 ## Usage
-This tool allows for the conversion of Meraki Sensor data from the native JSON encoding format to a Comma Seperated Variable (CSV) format, and Pandas DataFrame (df) format.  
+Historical Meraki MT data is initially gathered usingthe Meraki Dashboard API (specifically 'getOrganizationSensorReadingsHistory'), providing data in JSON format spanning up to a 7 day period. This tool allows for the conversion of Meraki Sensor data from the native JSON encoding format to a Comma Seperated Variable (CSV) format, and Pandas DataFrame (df) format.  
 Machine Learning algorithms and other Data Wrangling tools use these formats as the imput.
 
 The tool is launched by the following command:  
@@ -61,6 +61,6 @@ An example output formtis provided below. The results are printed to 'results.cs
 ### CSV output displayed in Excel:
 ![Output: CSV](images/xls.png)
 
-### Pandas Dataframe output displaued using Matplotlib
+### Pandas Dataframe output displayed using Matplotlib
 
 ![Output: Matplotlib](images/mat.png)
