@@ -21,9 +21,9 @@ The purpose of this project is to take the output from the Meraki Dashboard API 
 
 
 ## Usage
-Historical Meraki MT data is initially gathered usingthe Meraki Dashboard API (specifically 'getOrganizationSensorReadingsHistory'), providing data in JSON format spanning up to a 7 day period. An example of this data in JSON format is shown below:
+Historical Meraki MT data is initially gathered usingthe Meraki Dashboard API (specifically 'getOrganizationSensorReadingsHistory'), providing data in JSON format spanning up to a 7 day period. An example of this data in JSON format is shown below. This format contains data that is generally not relevant to the AI/ML process, such as 'network id' and 'network name':
 
- {'humidity': {'relativePercentage': 83},
+ [{'humidity': {'relativePercentage': 83},
   'metric': 'humidity',
   'network': {'id': 'L_590864276612345', 'name': 'House'},
   'serial': 'Q5HS-69YH-DSH5',
@@ -46,7 +46,7 @@ Historical Meraki MT data is initially gathered usingthe Meraki Dashboard API (s
 
 
 
-This tool allows for the conversion of Meraki Sensor data from the native JSON encoding format to a Comma Seperated Variable (CSV) format, and Pandas DataFrame (df) format.  
+This tool allows for the conversion of Meraki Sensor data from the native JSON encoding format to formats better suited to AI/ML processing - these are Comma Seperated Variable (CSV) format, and Pandas DataFrame (df) format.  
 Machine Learning algorithms and other Data Wrangling tools use these formats as the imput.
 
 The tool is launched by the following command:  
