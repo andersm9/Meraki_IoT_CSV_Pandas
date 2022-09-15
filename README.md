@@ -47,7 +47,7 @@ Historical Meraki MT data is initially gathered usingthe Meraki Dashboard API (s
 
 
 This tool allows for the conversion of Meraki Sensor data from the native JSON encoding format to formats better suited to AI/ML processing - these are Comma Seperated Variable (CSV) format, and Pandas DataFrame (df) format.  
-Machine Learning algorithms and other Data Wrangling tools use these formats as the imput.
+Machine Learning algorithms and other Data Wrangling tools use these formats as the input. The tool also splits the data into discrete 'chunks' of time.
 
 The tool is launched by the following command:  
 > python Meraki_IoT_CSV.py    
