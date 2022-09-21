@@ -89,3 +89,5 @@ An example output formtis provided below. The results are printed to 'results.cs
 ### Pandas Dataframe output displayed using Matplotlib
 
 ![Output: Matplotlib](images/mat.png)
+
+[![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/andersm9/Meraki_IoT_CSV_Pandas)
